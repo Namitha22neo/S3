@@ -1,0 +1,98 @@
+Mainactvity.java package com.example.myapplication; 
+ 
+import androidx.appcompat.app.AppCompatActivity; 
+import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.CheckBox; import android.widget.EditText; import android.widget.RadioButton; import android.widget.RadioGroup; import android.widget.Toast; 
+public class MainActivity extends AppCompatActivity { 
+    EditText e_name, e_email, e_pwd; 
+    RadioGroup gender; 
+    RadioButton e_female, e_male;     CheckBox checkBox; 
+    protected void onCreate(Bundle savedInstanceState) {         super.onCreate(savedInstanceState);         setContentView(R.layout.activity_main);         e_name = findViewById(R.id.e_name);         e_email = findViewById(R.id.e_email);         e_pwd = findViewById(R.id.e_pwd);         gender = findViewById(R.id.gender);         e_female = findViewById(R.id.e_female);         e_male = findViewById(R.id.e_male); 
+        checkBox = findViewById(R.id.checkBox); 
+    } 
+public void onClickSubmit(View view) {         boolean isAllFieldsChecked = checkedAllFields(); 
+        if (isAllFieldsChecked) { 
+            Toast.makeText(this, "SUCCESSFUL", Toast.LENGTH_SHORT).show(); 
+        } 
+    } 
+ 
+    private boolean checkedAllFields() {         if (e_name.length() == 0) { 
+            e_name.setError("Please Enter Your Name");             return false; 
+        } 
+if (e_email.length() == 0) { 
+            e_email.setError("Email required"); 
+            return false; 
+        } else { 
+            String s_email = e_email.getText().toString(); 
+            String checkEmailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";             if (!s_email.matches(checkEmailPattern)) {                 e_email.setError("Select a valid email");                 return false; 
+            } 
+        } 
+ 
+        if (e_pwd.length() < 8) { 
+            e_pwd.setError("please enter valid password");             return false; 
+        } 
+ 
+        if (gender.getCheckedRadioButtonId() == -1) {             e_female.setError("please choose gender"); 
+            Toast.makeText(this, "select gender", Toast.LENGTH_SHORT).show();             e_female.requestFocus(); 
+            return false; 
+        } 
+ 
+        if (!checkBox.isChecked()) { 
+            checkBox.setError("please agree!"); 
+            Toast.makeText(this, "please agree to the termsnam1", 
+Toast.LENGTH_SHORT).show();             checkBox.requestFocus(); 
+            return false; 
+        } 
+ 
+        return true; 
+    } 
+} activity_main.xml 
+ 
+<?xml version="1.0" encoding="utf-8"?> 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"     android:layout_width="match_parent"     android:layout_height="wrap_content" 
+    android:orientation="vertical"> 
+ 
+    <LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content" 
+        android:orientation="horizontal"> 
+ 
+        <TextView             android:id="@+id/textView3"             android:layout_width="match_parent"             android:layout_height="75dp"             android:text="Registration Form"             android:textAlignment="center"             android:textColor="#D82020"             android:textSize="24sp" />     </LinearLayout> 
+ 
+    <LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content" 
+        android:orientation="horizontal"> 
+ 
+        <TextView             android:id="@+id/textView4"             android:layout_width="120dp"             android:layout_height="wrap_content"             android:text="Name" 
+            android:textSize="20sp" /> 
+ 
+        <EditText             android:id="@+id/e_name"             android:layout_width="0dp"             android:layout_height="wrap_content"             android:layout_weight="1"             android:inputType="text" />     </LinearLayout> 
+ 
+    <LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content" 
+        android:orientation="horizontal"> 
+ 
+        <TextView             android:id="@+id/textView5"             android:layout_width="120dp"             android:layout_height="wrap_content"             android:text="Email"             android:textSize="20sp" /> 
+<EditText             android:id="@+id/e_email"             android:layout_width="0dp"             android:layout_height="wrap_content"             android:layout_weight="1"             android:inputType="text" />     </LinearLayout> 
+ 
+    <LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content" 
+        android:orientation="horizontal"> 
+ 
+        <TextView             android:id="@+id/textView6"             android:layout_width="120dp"             android:layout_height="wrap_content"             android:text="Password" 
+            android:textSize="20sp" /> 
+ 
+        <EditText             android:id="@+id/e_pwd"             android:layout_width="0dp"             android:layout_height="wrap_content"             android:layout_weight="1"             android:inputType="textPassword" /> 
+    </LinearLayout> 
+ 
+    <LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content" 
+        android:orientation="vertical"> 
+ 
+        <TextView             android:id="@+id/gender_text"             android:layout_width="wrap_content"             android:layout_height="wrap_content"             android:text="Gender" 
+            android:textSize="20sp" /> 
+ 
+        <RadioGroup             android:id="@+id/gender"             android:layout_width="match_parent"             android:layout_height="wrap_content"> 
+ 
+            <RadioButton                 android:id="@+id/e_female"                 android:layout_width="wrap_content"                 android:layout_height="wrap_content" 
+                android:text="Female" /> 
+ 
+            <RadioButton                 android:id="@+id/e_male"                 android:layout_width="wrap_content"                 android:layout_height="wrap_content"                 android:text="Male" /> 
+        </RadioGroup>     </LinearLayout> 
+ 
+    <LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content"         android:orientation="horizontal" 
+<CheckBox 
+            android:id="@+id/checkBox"             android:layout_width="wrap_content"             android:layout_height="wrap_content"             android:text="I Agree" />     </LinearLayout><LinearLayout         android:layout_width="match_parent"         android:layout_height="wrap_content"         android:orientation="horizontal"  <Button             android:id="@+id/e_button"             android:layout_width="wrap_content"             android:layout_height="wrap_content"             android:onClick="onClickSubmit"             android:text="Submit" / </LinearLayout> </LinearLayout> 
